@@ -46,11 +46,11 @@ anchor:
 proxy-groups:
   - {name: 手动选择,        <<: *SelectMS,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/11111.png"}
   - {name: 自动选择,        <<: *SelectAU,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Flight.png"}
-  - {name: 即时通讯,        <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Telegram.png"}
-  - {name: 社交媒体,        <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Twitter.png"}
-  - {name: GitHub,         <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/GitHub.png"}
-  - {name: ChatGPT,        <<: *SelectUS,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/ChatGPT.png"}
-  - {name: Gemini,         <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/IconResource/App_icon/1024px/GoogleGemini.png"}
+  - {name: Telegram,        <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Telegram.png"}
+#  - {name: 社交媒体,        <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Twitter.png"}
+#  - {name: GitHub,         <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/GitHub.png"}
+#  - {name: ChatGPT,        <<: *SelectUS,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/ChatGPT.png"}
+#  - {name: Gemini,         <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/IconResource/App_icon/1024px/GoogleGemini.png"}
   - {name: AI服务,         <<: *SelectUS,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/AI_bot.png"}
 #  - {name: TikTok,         <<: *SelectUS,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/TikTok.png"}
 #  - {name: AppleTV+,       <<: *SelectHK,                                 icon: "https://raw.githubusercontent.com//Giveupmoon/Clash_Rules_Yaml/main/Icon/HOMOMIX/Color/Large/Apple_TV.png"}
