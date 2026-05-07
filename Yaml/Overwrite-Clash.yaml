@@ -103,29 +103,29 @@ rules:
   - RULE-SET,category-ai,AI服务
   - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
-  - RULE-SET,steam,Steam
+  # - RULE-SET,steam,Steam
   - RULE-SET,youtube,YouTube
-  - RULE-SET,apple-tvplus,AppleTV+
+  # - RULE-SET,apple-tvplus,AppleTV+
   - RULE-SET,PayPal,PayPal
   - RULE-SET,apple,苹果服务
-  - RULE-SET,microsoft,微软服务
+  # - RULE-SET,microsoft,微软服务
   - RULE-SET,google,谷歌服务
-  - RULE-SET,tiktok,TikTok
-  - RULE-SET,netflix,Netflix
-  - RULE-SET,disney,DisneyPlus
-  - RULE-SET,hbo,HBO
-  - RULE-SET,primevideo,PrimeVideo
-  - RULE-SET,category-emby,Emby
-  - RULE-SET,spotify,Spotify
-  - RULE-SET,bahamut,Bahamut
-  - RULE-SET,category-games,游戏平台
-  - RULE-SET,category-entertainment,国外媒体
+  # - RULE-SET,tiktok,TikTok
+  # - RULE-SET,netflix,Netflix
+  # - RULE-SET,disney,DisneyPlus
+  # - RULE-SET,hbo,HBO
+  # - RULE-SET,primevideo,PrimeVideo
+  # - RULE-SET,category-emby,Emby
+  # - RULE-SET,spotify,Spotify
+  # - RULE-SET,bahamut,Bahamut
+  # - RULE-SET,category-games,游戏平台
+  # - RULE-SET,category-entertainment,国外媒体
   - RULE-SET,gfw,手动选择
   - RULE-SET,telegram,即时通讯,no-resolve
   - RULE-SET,twitter,社交媒体,no-resolve
   - RULE-SET,facebook,社交媒体,no-resolve
   - RULE-SET,google-ip,谷歌服务,no-resolve
-  - RULE-SET,netflix-ip,Netflix,no-resolve
+  # - RULE-SET,netflix-ip,Netflix,no-resolve
   - RULE-SET,cn,全球直连
   - RULE-SET,cn-ip,全球直连,no-resolve
   - MATCH,漏网之鱼
@@ -155,28 +155,28 @@ rule-providers:
   category-ai:                              {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
   github:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   category-speedtest:                       {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
-  steam:                                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
+  # steam:                                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
   youtube:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
-  apple-tvplus:                             {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"}
+  # apple-tvplus:                             {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"}
   apple:                                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
-  microsoft:                                {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  # microsoft:                                {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   google:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  tiktok:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
-  netflix:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
-  disney:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
-  hbo:                                      {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
-  primevideo:                               {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/primevideo.mrs"}
-  category-emby:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
-  spotify:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
-  bahamut:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
-  category-games:                           {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
-  category-entertainment:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
+  # tiktok:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  # netflix:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  # disney:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
+  # hbo:                                      {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
+  # primevideo:                               {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/primevideo.mrs"}
+  # category-emby:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
+  # spotify:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
+  # bahamut:                                  {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
+  # category-games:                           {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
+  # category-entertainment:                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
   gfw:                                      {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
   telegram:                                 {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
   twitter:                                  {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"}
   facebook:                                 {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"}
   google-ip:                                {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
-  netflix-ip:                               {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  # netflix-ip:                               {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
   cn:                                       {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
   cn-ip:                                    {<<: *ip,             url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
   PayPal:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
