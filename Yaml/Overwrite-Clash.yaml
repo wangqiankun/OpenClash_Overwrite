@@ -22,11 +22,13 @@ anchor:
   FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)).*$'
   FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD)).*$'
   FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH)).*$'
+  FilterLargeTraffic: &FilterLargeTraffic '^(?=.*(?i)(实验性)).*$'
 
   # 策略组代理列表模板 - 预定义的代理节点优先级排序
   SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连)).)*$"}
-  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, 自动选择, 全球直连], use: [Sub-store]}
-  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
+  SelectLargeTraffic: &SelectLargeTraffic {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterLargeTraffic}
+  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store]}
+  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
   SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
   SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
   SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, 手动选择, 自动选择, 全球直连]}
@@ -68,6 +70,7 @@ proxy-groups:
 #  - {name: 微软服务,        <<: *SelectHK}
 #  - {name: 游戏平台,        <<: *SelectHK}
 #  - {name: Steam,          <<: *SelectHK}
+  - {name: HighTraffic,    <<: *SelectLargeTraffic}
   - {name: 测速工具,        <<: *SelectHK}
   - {name: 漏网之鱼,        <<: *SelectOther}
 #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
