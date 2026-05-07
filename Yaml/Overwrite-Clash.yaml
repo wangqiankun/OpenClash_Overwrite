@@ -29,11 +29,11 @@ anchor:
   SelectLargeTraffic: &SelectLargeTraffic {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterLargeTraffic}
   SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store]}
   SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
-  SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
-  SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
-  SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, 手动选择, 自动选择, 全球直连]}
-  SelectJP: &SelectJP {type: select, proxies: [JP, HK, US, SG, TW, 手动选择, 自动选择, 全球直连]}
-  SelectTW: &SelectTW {type: select, proxies: [TW, HK, US, SG, JP, 手动选择, 自动选择, 全球直连]}
+  SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  SelectJP: &SelectJP {type: select, proxies: [JP, HK, US, SG, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  SelectTW: &SelectTW {type: select, proxies: [TW, HK, US, SG, JP, HighTraffic, 手动选择, 自动选择, 全球直连]}
 
   # 规则提供者相关锚点
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
