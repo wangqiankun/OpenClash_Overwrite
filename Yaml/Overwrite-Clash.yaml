@@ -16,7 +16,6 @@ proxy-providers:
 anchor:
   # 策略组类型模板 - 定义不同的策略组基础配置
   BaseURL-test: &BaseURL-test {type: url-test, include-all: true, tolerance: 20, interval: 120, url: https://cp.cloudflare.com/generate_204}
-  BaseDIRECT: &BaseDIRECT {type: url-test, hidden: true}
   # 节点筛选正则表达式 - 基于地理位置和关键词过滤
   FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG)).*$'
   FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP)).*$'
@@ -27,7 +26,7 @@ anchor:
   # 策略组代理列表模板 - 预定义的代理节点优先级排序
   SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连)).)*$"}
   SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, 自动选择, 全球直连], use: [Sub-store]}
-  SelectOther: &SelectOther {type: select, proxies: [TW, HK, US, SG, JP, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
+  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
   SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
   SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
   SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, 手动选择, 自动选择, 全球直连]}
@@ -51,10 +50,10 @@ proxy-groups:
 #  - {name: GitHub,         <<: *SelectHK}
 #  - {name: ChatGPT,        <<: *SelectUS}
 #  - {name: Gemini,         <<: *SelectHK}
-  - {name: AI服务,         <<: *SelectUS}
+  - {name: AI服务,         <<: *SelectSG}
 #  - {name: TikTok,         <<: *SelectUS}
 #  - {name: AppleTV+,       <<: *SelectHK}
-  - {name: YouTube,        <<: *SelectSG}
+  - {name: YouTube,        <<: *SelectHK}
 #  - {name: Netflix,        <<: *SelectSG}
 #  - {name: DisneyPlus,     <<: *SelectSG}
 #  - {name: HBO,            <<: *SelectSG}
@@ -71,12 +70,13 @@ proxy-groups:
 #  - {name: Steam,          <<: *SelectHK}
   - {name: 测速工具,        <<: *SelectHK}
   - {name: 漏网之鱼,        <<: *SelectOther}
+#此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
   - {name: HK,        <<: *BaseURL-test,    filter: *FilterHK}
   - {name: US,        <<: *BaseURL-test,    filter: *FilterUS}
   - {name: JP,        <<: *BaseURL-test,    filter: *FilterJP}
   - {name: SG,      <<: *BaseURL-test,    filter: *FilterSG}
   - {name: TW,        <<: *BaseURL-test,    filter: *FilterTW}
-  - {name: 全球直连,        <<: *BaseDIRECT,    proxies: [DIRECT]}
+  - {name: 全球直连,        type: select,    proxies: [DIRECT]}
 
 # =========================================
 #                 规则配置
