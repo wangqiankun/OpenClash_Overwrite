@@ -25,14 +25,14 @@ anchor:
   FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH)).*$'
 
   # 策略组代理列表模板 - 预定义的代理节点优先级排序
-  SelectAU: &SelectAU {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连)).)*$"}
-  SelectMS: &SelectMS {type: select, proxies: [香港节点, 美国节点, 日本节点, 新加坡节点, 台湾节点, 自动选择, 全球直连], use: [Sub-store]}
-  SelectMH: &SelectMH {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
-  SelectHK: &SelectHK {type: select, proxies: [香港节点, 美国节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, 全球直连]}
-  SelectUS: &SelectUS {type: select, proxies: [美国节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 手动选择, 自动选择, 全球直连]}
-  SelectSG: &SelectSG {type: select, proxies: [新加坡节点, 香港节点, 美国节点, 日本节点, 台湾节点, 手动选择, 自动选择, 全球直连]}
-  SelectJP: &SelectJP {type: select, proxies: [日本节点, 香港节点, 美国节点, 新加坡节点, 台湾节点, 手动选择, 自动选择, 全球直连]}
-  SelectTW: &SelectTW {type: select, proxies: [台湾节点, 香港节点, 美国节点, 新加坡节点, 日本节点, 手动选择, 自动选择, 全球直连]}
+  SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连)).)*$"}
+  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, 自动选择, 全球直连], use: [Sub-store]}
+  SelectOther: &SelectOther {type: select, proxies: [TW, HK, US, SG, JP, 手动选择, 自动选择, 全球直连], use: [Sub-store]}
+  SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
+  SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, 手动选择, 自动选择, 全球直连]}
+  SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, 手动选择, 自动选择, 全球直连]}
+  SelectJP: &SelectJP {type: select, proxies: [JP, HK, US, SG, TW, 手动选择, 自动选择, 全球直连]}
+  SelectTW: &SelectTW {type: select, proxies: [TW, HK, US, SG, JP, 手动选择, 自动选择, 全球直连]}
 
   # 规则提供者相关锚点
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
@@ -44,8 +44,8 @@ anchor:
 #             策略组配置
 # =========================================
 proxy-groups:
-  - {name: 手动选择,        <<: *SelectMS}
-  - {name: 自动选择,        <<: *SelectAU}
+  - {name: 手动选择,        <<: *SelectManual}
+  - {name: 自动选择,        <<: *SelectAuto}
   - {name: Telegram,        <<: *SelectHK}
 #  - {name: 社交媒体,        <<: *SelectHK}
 #  - {name: GitHub,         <<: *SelectHK}
@@ -70,12 +70,12 @@ proxy-groups:
 #  - {name: 游戏平台,        <<: *SelectHK}
 #  - {name: Steam,          <<: *SelectHK}
   - {name: 测速工具,        <<: *SelectHK}
-  - {name: 漏网之鱼,        <<: *SelectMH}
-  - {name: 香港节点,        <<: *BaseURL-test,    filter: *FilterHK}
-  - {name: 美国节点,        <<: *BaseURL-test,    filter: *FilterUS}
-  - {name: 日本节点,        <<: *BaseURL-test,    filter: *FilterJP}
-  - {name: 新加坡节点,      <<: *BaseURL-test,    filter: *FilterSG}
-  - {name: 台湾节点,        <<: *BaseURL-test,    filter: *FilterTW}
+  - {name: 漏网之鱼,        <<: *SelectOther}
+  - {name: HK,        <<: *BaseURL-test,    filter: *FilterHK}
+  - {name: US,        <<: *BaseURL-test,    filter: *FilterUS}
+  - {name: JP,        <<: *BaseURL-test,    filter: *FilterJP}
+  - {name: SG,      <<: *BaseURL-test,    filter: *FilterSG}
+  - {name: TW,        <<: *BaseURL-test,    filter: *FilterTW}
   - {name: 全球直连,        <<: *BaseDIRECT,    proxies: [DIRECT]}
 
 # =========================================
