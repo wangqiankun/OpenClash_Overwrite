@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenClash AI Rule Provider"
+  short_description: "Maintain AI service routing rules for OpenClash"
+  default_prompt: "Use $openclash-ai-rule-provider to add an AI service domain to this OpenClash overwrite repo."

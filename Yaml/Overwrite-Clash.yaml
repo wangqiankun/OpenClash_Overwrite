@@ -104,6 +104,7 @@ rules:
   # - RULE-SET,category-social-media,社交媒体
   # - RULE-SET,openai,ChatGPT
   # - RULE-SET,google-gemini,Gemini
+  - RULE-SET,Custom_AI_Domain,AI服务
   - RULE-SET,category-ai,AI服务
   # - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
@@ -156,6 +157,7 @@ rule-providers:
   # category-social-media:                    {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
   # openai:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   # google-gemini:                            {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
+  Custom_AI_Domain:                         {<<: *class,          url: "https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list"}
   category-ai:                              {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
   # github:                                   {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   category-speedtest:                       {<<: *domain,         url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
