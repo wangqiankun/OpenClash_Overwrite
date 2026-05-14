@@ -94,6 +94,7 @@ proxy-groups:
 # 备注：优先走 rules 里从上到下第一个命中的策略。
 # =========================================
 rules:
+  - DOMAIN,net.qq.pw,HK
   - RULE-SET,private,全球直连
   - RULE-SET,Custom_Crypto_Domain,AI服务
   - RULE-SET,private_IP,全球直连,no-resolve
