@@ -17,21 +17,21 @@ anchor:
   # 策略组类型模板 - 定义不同的策略组基础配置
   BaseURL-test: &BaseURL-test {type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204"}
   # 节点筛选正则表达式 - 基于地理位置和关键词过滤
-  FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|Relay)).*$'
-  FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|Relay)).*$'
-  FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|Relay)).*$'
-  FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|Relay)).*$'
-  FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|Relay)).*$'
-  FilterLargeTraffic: &FilterLargeTraffic '^(?=.*(?i)(实验性))(?!.*(?i)(落地|Relay)).*$'
-  FilterRelay: &FilterRelay '^(?=.*(?i)(落地|Relay)).*$'
-  FilterExcludeRelay: &FilterExcludeRelay '^((?!(落地|Relay)).)*$'
+  FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|Exit)).*$'
+  FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|Exit)).*$'
+  FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|Exit)).*$'
+  FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|Exit)).*$'
+  FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|Exit)).*$'
+  FilterLargeTraffic: &FilterLargeTraffic '^(?=.*(?i)(实验性))(?!.*(?i)(落地|Exit)).*$'
+  FilterExit: &FilterExit '^(?=.*(?i)(落地|Exit)).*$'
+  FilterExcludeExit: &FilterExcludeExit '^((?!(落地|Exit)).)*$'
 
   # 策略组代理列表模板 - 预定义的代理节点优先级排序
-  SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Relay)).)*$"}
+  SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
   SelectLargeTraffic: &SelectLargeTraffic {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterLargeTraffic}
-  SelectRelay: &SelectRelay {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterRelay}
-  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeRelay}
-  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeRelay}
+  SelectExit: &SelectExit {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterExit}
+  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
+  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
   SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
   SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
   SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
@@ -74,7 +74,7 @@ proxy-groups:
 #  - {name: 游戏平台,        <<: *SelectHK}
 #  - {name: Steam,          <<: *SelectHK}
   - {name: HighTraffic,    <<: *SelectLargeTraffic}
-  - {name: Relay,          <<: *SelectRelay}
+  - {name: Exit,           <<: *SelectExit}
   - {name: 测速工具,        <<: *SelectHK}
   - {name: 漏网之鱼,        <<: *SelectOther}
 #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
