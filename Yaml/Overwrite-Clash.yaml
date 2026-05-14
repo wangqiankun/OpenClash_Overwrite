@@ -29,7 +29,9 @@ anchor:
   # 策略组代理列表模板 - 预定义的代理节点优先级排序
   SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
   SelectLargeTraffic: &SelectLargeTraffic {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterLargeTraffic}
+  SelectAI: &SelectAI {type: select, proxies: [Exit, Exit前置, SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
   SelectExit: &SelectExit {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterExit}
+  SelectExitFront: &SelectExitFront {type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 自动选择]}
   SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
   SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
   SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
@@ -55,7 +57,7 @@ proxy-groups:
 #  - {name: GitHub,         <<: *SelectHK}
 #  - {name: ChatGPT,        <<: *SelectUS}
 #  - {name: Gemini,         <<: *SelectHK}
-  - {name: AI服务,         <<: *SelectSG}
+  - {name: AI服务,         <<: *SelectAI}
 #  - {name: TikTok,         <<: *SelectUS}
 #  - {name: AppleTV+,       <<: *SelectHK}
   - {name: YouTube,        <<: *SelectHK}
@@ -74,6 +76,7 @@ proxy-groups:
 #  - {name: 游戏平台,        <<: *SelectHK}
 #  - {name: Steam,          <<: *SelectHK}
   - {name: HighTraffic,    <<: *SelectLargeTraffic}
+  - {name: Exit前置,       <<: *SelectExitFront}
   - {name: Exit,           <<: *SelectExit}
   - {name: 测速工具,        <<: *SelectHK}
   - {name: 漏网之鱼,        <<: *SelectOther}
