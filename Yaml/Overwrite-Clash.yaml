@@ -13,79 +13,48 @@ proxy-providers:
       skip-cert-verify: true
       udp: true
       
-anchor:
-  # 策略组类型模板 - 定义不同的策略组基础配置
-  BaseURL-test: &BaseURL-test {type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204"}
-  # 节点筛选正则表达式 - 基于地理位置和关键词过滤
-  FilterHK: &FilterHK '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|Exit)).*$'
-  FilterSG: &FilterSG '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|Exit)).*$'
-  FilterJP: &FilterJP '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|Exit)).*$'
-  FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|Exit)).*$'
-  FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|Exit)).*$'
-  FilterLargeTraffic: &FilterLargeTraffic '^(?=.*(?i)(实验性))(?!.*(?i)(落地|Exit)).*$'
-  FilterExit: &FilterExit '^(?=.*(?i)(落地|Exit)).*$'
-  FilterExcludeExit: &FilterExcludeExit '^((?!(落地|Exit)).)*$'
-
-  # 策略组代理列表模板 - 预定义的代理节点优先级排序
-  SelectAuto: &SelectAuto {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
-  SelectLargeTraffic: &SelectLargeTraffic {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterLargeTraffic}
-  SelectAI: &SelectAI {type: select, proxies: [Exit, SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  SelectExit: &SelectExit {type: url-test, include-all: true, tolerance: 20, interval: 120, filter: *FilterExit}
-  SelectExitFront: &SelectExitFront {type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 自动选择]}
-  SelectManual: &SelectManual {type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
-  SelectOther: &SelectOther {type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: *FilterExcludeExit}
-  SelectHK: &SelectHK {type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  SelectUS: &SelectUS {type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  SelectSG: &SelectSG {type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  SelectJP: &SelectJP {type: select, proxies: [JP, HK, US, SG, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  SelectTW: &SelectTW {type: select, proxies: [TW, HK, US, SG, JP, HighTraffic, 手动选择, 自动选择, 全球直连]}
-
-  # 规则提供者相关锚点
-  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
-  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
-  class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 # 策略组
 # =========================================
 #             策略组配置
 # =========================================
 proxy-groups:
-  - {name: 手动选择,        <<: *SelectManual}
-  - {name: 自动选择,        <<: *SelectAuto}
-  - {name: Telegram,        <<: *SelectHK}
-#  - {name: 社交媒体,        <<: *SelectHK}
-#  - {name: GitHub,         <<: *SelectHK}
-#  - {name: ChatGPT,        <<: *SelectUS}
-#  - {name: Gemini,         <<: *SelectHK}
-  - {name: AI服务,         <<: *SelectAI}
-#  - {name: TikTok,         <<: *SelectUS}
-#  - {name: AppleTV+,       <<: *SelectHK}
-  - {name: YouTube,        <<: *SelectHK}
-#  - {name: Netflix,        <<: *SelectSG}
-#  - {name: DisneyPlus,     <<: *SelectSG}
-#  - {name: HBO,            <<: *SelectSG}
-#  - {name: PrimeVideo,     <<: *SelectSG}
-#  - {name: Emby,           <<: *SelectSG}
-#  - {name: Spotify,        <<: *SelectHK}
-#  - {name: Bahamut,        <<: *SelectTW}
-#  - {name: 国外媒体,        <<: *SelectSG}
-  - {name: PayPal,         <<: *SelectUS}
-  - {name: 谷歌服务,        <<: *SelectHK}
-  - {name: 苹果服务,        <<: *SelectHK}
-#  - {name: 微软服务,        <<: *SelectHK}
-#  - {name: 游戏平台,        <<: *SelectHK}
-#  - {name: Steam,          <<: *SelectHK}
-  - {name: HighTraffic,    <<: *SelectLargeTraffic}
-  - {name: Exit前置,       <<: *SelectExitFront}
-  - {name: Exit,           <<: *SelectExit}
-  - {name: 测速工具,        <<: *SelectHK}
-  - {name: 漏网之鱼,        <<: *SelectOther}
+  - {name: 手动选择,        type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|Exit)).)*$'}
+  - {name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
+  - {name: Telegram,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: 社交媒体,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: GitHub,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: AI服务,         type: select, proxies: [Exit, SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: TikTok,         type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: AppleTV+,       type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: YouTube,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Netflix,        type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: DisneyPlus,     type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: HBO,            type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: PrimeVideo,     type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Emby,           type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Spotify,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Bahamut,        type: select, proxies: [TW, HK, US, SG, JP, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: 国外媒体,        type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: PayPal,         type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: 谷歌服务,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: 苹果服务,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: 微软服务,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: 游戏平台,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+#  - {name: Steam,          type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: HighTraffic,    type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(实验性))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: Exit前置,       type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 自动选择]}
+  - {name: Exit,           type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(落地|Exit)).*$'}
+  - {name: 测速工具,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: 漏网之鱼,        type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|Exit)).)*$'}
 #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
-  - {name: HK,        <<: *BaseURL-test,    filter: *FilterHK}
-  - {name: US,        <<: *BaseURL-test,    filter: *FilterUS}
-  - {name: JP,        <<: *BaseURL-test,    filter: *FilterJP}
-  - {name: SG,      <<: *BaseURL-test,    filter: *FilterSG}
-  - {name: TW,        <<: *BaseURL-test,    filter: *FilterTW}
+  - {name: HK,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: US,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: JP,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: SG,      type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: TW,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|Exit)).*$'}
   - {name: 全球直连,        type: select,    proxies: [DIRECT]}
   - {name: Myself_Direct_Domain, type: select, proxies: [DIRECT]}
 
@@ -150,52 +119,52 @@ rules:
 #            规则提供者
 # =========================================
 rule-providers: 
-  giveup_direct:                            {<<: *class,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Direct.list"}
-  giveup_proxy:                             {<<: *class,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Proxy.list"}
-  private:                                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
-  private_IP:                               {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
-  Custom_Direct_Domain:                     {<<: *domain,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Domain.mrs"}
-  Myself_Direct_Domain:                     {<<: *class,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Direct_Domain.list"}
-  Custom_Direct_IP:                         {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_IP.mrs"}
-  Custom_Proxy_Domain:                      {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs"}
-  Custom_Proxy_IP:                          {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs"}
-  Custom_Crypto_Domain:                     {<<: *class,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_Crypto_Domain.list"}
-  google-cn:                                {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs"}
-  category-games@cn:                        {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"}
-  Steam_CDN_Domain:                         {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_Domain.mrs"}
-  Steam_CDN_IP:                             {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_IP.mrs"}
-  category-game-platforms-download:         {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-game-platforms-download.mrs"}
-  category-public-tracker:                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
-  category-communication:                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
-  # category-social-media:                    {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
-  # openai:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
-  # google-gemini:                            {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
-  Custom_AI_Domain:                         {<<: *class,          url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list"}
-  category-ai:                              {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
-  # github:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
-  category-speedtest:                       {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
-  # steam:                                    {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
-  youtube:                                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
-  # apple-tvplus:                             {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"}
-  apple:                                    {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
-  # microsoft:                                {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
-  google:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
-  # tiktok:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
-  # netflix:                                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
-  # disney:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
-  # hbo:                                      {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
-  # primevideo:                               {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/primevideo.mrs"}
-  # category-emby:                            {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
-  # spotify:                                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
-  # bahamut:                                  {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
-  # category-games:                           {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
-  # category-entertainment:                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
-  gfw:                                      {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
-  telegram:                                 {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
-  # twitter:                                  {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"}
-  # facebook:                                 {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"}
-  google-ip:                                {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
-  # netflix-ip:                               {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
-  cn:                                       {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
-  cn-ip:                                    {<<: *ip,             url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
-  PayPal:                                   {<<: *domain,         url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
+  giveup_direct:                            {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Direct.list"}
+  giveup_proxy:                             {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Giveupmoon/Clash_Rules_Yaml/refs/heads/main/Rules/Giveup_Proxy.list"}
+  private:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  private_IP:                               {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"}
+  Custom_Direct_Domain:                     {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_Domain.mrs"}
+  Myself_Direct_Domain:                     {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Direct_Domain.list"}
+  Custom_Direct_IP:                         {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_IP.mrs"}
+  Custom_Proxy_Domain:                      {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs"}
+  Custom_Proxy_IP:                          {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs"}
+  Custom_Crypto_Domain:                     {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_Crypto_Domain.list"}
+  google-cn:                                {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs"}
+  category-games@cn:                        {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs"}
+  Steam_CDN_Domain:                         {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_Domain.mrs"}
+  Steam_CDN_IP:                             {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_IP.mrs"}
+  category-game-platforms-download:         {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-game-platforms-download.mrs"}
+  category-public-tracker:                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs"}
+  category-communication:                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs"}
+  # category-social-media:                    {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
+  # openai:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
+  # google-gemini:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
+  Custom_AI_Domain:                         {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list"}
+  category-ai:                              {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
+  # github:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  category-speedtest:                       {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
+  # steam:                                    {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
+  youtube:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  # apple-tvplus:                             {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"}
+  apple:                                    {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"}
+  # microsoft:                                {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  google:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  # tiktok:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  # netflix:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  # disney:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
+  # hbo:                                      {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
+  # primevideo:                               {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/primevideo.mrs"}
+  # category-emby:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
+  # spotify:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
+  # bahamut:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
+  # category-games:                           {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
+  # category-entertainment:                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
+  gfw:                                      {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
+  telegram:                                 {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  # twitter:                                  {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"}
+  # facebook:                                 {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"}
+  google-ip:                                {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  # netflix-ip:                               {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  cn:                                       {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  cn-ip:                                    {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  PayPal:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
