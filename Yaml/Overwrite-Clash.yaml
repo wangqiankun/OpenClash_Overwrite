@@ -18,7 +18,7 @@ proxy-providers:
 # =========================================
 #             策略组配置
 # =========================================
-proxy-groups:
+proxy-groups: #!replace
   - {name: 手动选择,        type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|Exit)).)*$'}
   - {name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
   - {name: Telegram,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
@@ -62,7 +62,7 @@ proxy-groups:
 #                 规则配置
 # 备注：优先走 rules 里从上到下第一个命中的策略。
 # =========================================
-rules:
+rules: #!replace
   - DOMAIN,nat.qq.pw,US
   - RULE-SET,private,全球直连
   - RULE-SET,Custom_Crypto_Domain,AI服务
