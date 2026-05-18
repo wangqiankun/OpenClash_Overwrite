@@ -19,14 +19,14 @@ proxy-providers:
 #             策略组配置
 # =========================================
 proxy-groups: #!replace
-  - {name: 手动选择,        type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|Exit)).)*$'}
-  - {name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|Exit)).)*$"}
+  - {name: 手动选择,        type: select, proxies: [HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|AI出口)).)*$'}
+  - {name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|AI出口)).)*$"}
   - {name: Telegram,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: 社交媒体,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: GitHub,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  - {name: AI服务,         type: select, proxies: [Exit, SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: AI服务,         type: select, proxies: [AI出口, SG, HK, US, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: TikTok,         type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: AppleTV+,       type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
   - {name: YouTube,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
@@ -44,17 +44,17 @@ proxy-groups: #!replace
 #  - {name: 微软服务,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: 游戏平台,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: Steam,          type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  - {name: HighTraffic,    type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(实验性))(?!.*(?i)(落地|Exit)).*$'}
-  - {name: Exit前置,       type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 自动选择]}
-  - {name: Exit,           type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(落地|Exit)).*$'}
+  - {name: HighTraffic,    type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(实验性))(?!.*(?i)(落地|AI出口|微林)).*$'}
+  - {name: AI出口前置,       type: select, proxies: [SG, HK, US, JP, TW, HighTraffic, 自动选择]}
+  - {name: AI出口,           type: select, include-all: true, filter: '^(?=.*(?i)(落地|AI出口|微林)).*$'}
   - {name: 测速工具,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 手动选择, 自动选择, 全球直连]}
-  - {name: 漏网之鱼,        type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|Exit)).)*$'}
+  - {name: 漏网之鱼,        type: select, proxies: [SG, TW, HK, US, JP, HighTraffic, 手动选择, 自动选择, 全球直连], use: [Sub-store], filter: '^((?!(落地|AI出口|微林)).)*$'}
 #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
-  - {name: HK,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|Exit)).*$'}
-  - {name: US,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|Exit)).*$'}
-  - {name: JP,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|Exit)).*$'}
-  - {name: SG,      type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|Exit)).*$'}
-  - {name: TW,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|Exit)).*$'}
+  - {name: HK,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|AI出口|微林)).*$'}
+  - {name: US,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|AI出口|微林)).*$'}
+  - {name: JP,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|AI出口|微林)).*$'}
+  - {name: SG,      type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|AI出口|微林)).*$'}
+  - {name: TW,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(?i)(落地|AI出口|微林)).*$'}
   - {name: 全球直连,        type: select,    proxies: [DIRECT]}
   - {name: Myself_Direct_Domain, type: select, proxies: [DIRECT]}
 
