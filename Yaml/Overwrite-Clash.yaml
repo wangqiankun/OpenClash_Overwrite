@@ -27,6 +27,7 @@ proxy-groups: #!replace
 #  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
 #  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
   - {name: AI服务,         type: select, proxies: [AI出口, SG, HK, US, JP, TW, 自建节点, HighTraffic, 手动选择, 自动选择, 全球直连]}
+  - {name: JetBrains,      type: select, proxies: [SG, HK, US, JP, TW, 自建节点, HighTraffic, 手动选择, 自动选择, 全球直连]}
 #  - {name: TikTok,         type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
 #  - {name: AppleTV+,       type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
   - {name: YouTube,        type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
@@ -87,6 +88,7 @@ rules: #!replace
   # - RULE-SET,google-gemini,Gemini
   - RULE-SET,Custom_AI_Domain,AI服务
   - RULE-SET,category-ai,AI服务
+  - RULE-SET,JetBrains,JetBrains
   # - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
   # - RULE-SET,steam,Steam
@@ -141,6 +143,7 @@ rule-providers:
   # openai:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   # google-gemini:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
   Custom_AI_Domain:                         {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list"}
+  JetBrains:                                {type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Jetbrains/Jetbrains.list"}
   category-ai:                              {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs"}
   # github:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   category-speedtest:                       {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs"}
