@@ -19,8 +19,8 @@ proxy-providers:
 #             策略组配置
 # =========================================
 proxy-groups: #!replace
-  - { name: 手动选择,        type: select, proxies: [ HK, US, JP, SG, TW, HighTraffic, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地)).)*$' }
-  - { name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地)).)*$" }
+  - { name: 手动选择,        type: select, proxies: [ HK, US, JP, SG, TW, 自建节点, HighTraffic, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地)).)*$' }
+  - { name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|自建)).)*$" }
   - { name: Telegram,        type: select, proxies: [ HK, US, SG, JP, TW, HighTraffic, 自建节点, 手动选择, 自动选择, 全球直连 ] }
   #  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
   #  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, HighTraffic, 自建节点,手动选择, 自动选择, 全球直连]}
@@ -51,15 +51,18 @@ proxy-groups: #!replace
 # =========================================
 rules: #!replace
   - RULE-SET,private,全球直连
-  - RULE-SET,Custom_Crypto_Domain,AI服务
+  - RULE-SET,Myself_Direct_Domain,Myself_Direct_Domain
+  - RULE-SET,Myself_Proxy_Domain,手动选择
+  - RULE-SET,Custom_Crypto_Domain,手动选择
+  - RULE-SET,Custom_AI_Domain,AI服务
+  - RULE-SET,Claude,Claude
+  - RULE-SET,category-ai,AI服务
   - RULE-SET,private_IP,全球直连,no-resolve
   - RULE-SET,giveup_direct,全球直连
   - RULE-SET,giveup_proxy,手动选择
   - RULE-SET,Custom_Direct_Domain,全球直连
-  - RULE-SET,Myself_Direct_Domain,Myself_Direct_Domain
   - RULE-SET,Custom_Direct_IP,全球直连,no-resolve
   - RULE-SET,Custom_Proxy_Domain,手动选择
-  - RULE-SET,Myself_Proxy_Domain,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
   - RULE-SET,google-cn,全球直连
   - RULE-SET,category-games@cn,全球直连
@@ -68,38 +71,18 @@ rules: #!replace
   - RULE-SET,category-game-platforms-download,全球直连
   - RULE-SET,category-public-tracker,全球直连
   - RULE-SET,category-communication,Telegram
-  # - RULE-SET,category-social-media,社交媒体
   # - RULE-SET,openai,ChatGPT
   # - RULE-SET,google-gemini,Gemini
-  - RULE-SET,Custom_AI_Domain,AI服务
-  - RULE-SET,Claude,Claude
-  - RULE-SET,category-ai,AI服务
   - RULE-SET,JetBrains,JetBrains
   # - RULE-SET,github,GitHub
   - RULE-SET,category-speedtest,测速工具
-  # - RULE-SET,steam,Steam
   - RULE-SET,youtube,YouTube
-  # - RULE-SET,apple-tvplus,AppleTV+
   - RULE-SET,PayPal,PayPal
   - RULE-SET,apple,苹果服务
-  # - RULE-SET,microsoft,微软服务
   - RULE-SET,google,谷歌服务
-  # - RULE-SET,tiktok,TikTok
-  # - RULE-SET,netflix,Netflix
-  # - RULE-SET,disney,DisneyPlus
-  # - RULE-SET,hbo,HBO
-  # - RULE-SET,primevideo,PrimeVideo
-  # - RULE-SET,category-emby,Emby
-  # - RULE-SET,spotify,Spotify
-  # - RULE-SET,bahamut,Bahamut
-  # - RULE-SET,category-games,游戏平台
-  # - RULE-SET,category-entertainment,国外媒体
   - RULE-SET,gfw,手动选择
   - RULE-SET,telegram,Telegram,no-resolve
-  # - RULE-SET,twitter,社交媒体,no-resolve
-  # - RULE-SET,facebook,社交媒体,no-resolve
   - RULE-SET,google-ip,谷歌服务,no-resolve
-  # - RULE-SET,netflix-ip,Netflix,no-resolve
   - RULE-SET,cn,全球直连
   - RULE-SET,cn-ip,全球直连,no-resolve
   - MATCH,漏网之鱼
@@ -126,37 +109,19 @@ rule-providers:
   category-game-platforms-download: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-game-platforms-download.mrs" }
   category-public-tracker: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-public-tracker.mrs" }
   category-communication: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs" }
-  # category-social-media:                    {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs"}
   # openai:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs"}
   # google-gemini:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
   Custom_AI_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list" }
   Claude: { type: http, interval: 86400, behavior: domain, format: yaml, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/anthropic.yaml" }
   JetBrains: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Jetbrains/Jetbrains.list" }
   category-ai: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
-  # github:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
   category-speedtest: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-speedtest.mrs" }
-  # steam:                                    {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
   youtube: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs" }
-  # apple-tvplus:                             {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-tvplus.mrs"}
   apple: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs" }
-  # microsoft:                                {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
   google: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs" }
-  # tiktok:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
-  # netflix:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
-  # disney:                                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
-  # hbo:                                      {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
-  # primevideo:                               {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/primevideo.mrs"}
-  # category-emby:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-emby.mrs"}
-  # spotify:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
-  # bahamut:                                  {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bahamut.mrs"}
-  # category-games:                           {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games.mrs"}
-  # category-entertainment:                   {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-entertainment.mrs"}
   gfw: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs" }
   telegram: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs" }
-  # twitter:                                  {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"}
-  # facebook:                                 {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/facebook.mrs"}
   google-ip: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs" }
-  # netflix-ip:                               {type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
   cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs" }
   cn-ip: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs" }
   PayPal: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs" }
