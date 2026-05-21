@@ -60,6 +60,7 @@ rules: #!replace
   - RULE-SET,Myself_Direct_Domain,Myself_Direct_Domain
   - RULE-SET,Custom_Direct_IP,全球直连,no-resolve
   - RULE-SET,Custom_Proxy_Domain,手动选择
+  - RULE-SET,Myself_Proxy_Domain,手动选择
   - RULE-SET,Custom_Proxy_IP,手动选择,no-resolve
   - RULE-SET,google-cn,全球直连
   - RULE-SET,category-games@cn,全球直连
@@ -116,6 +117,7 @@ rule-providers:
   Myself_Direct_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Direct_Domain.list" }
   Custom_Direct_IP: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Direct_IP.mrs" }
   Custom_Proxy_Domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs" }
+  Myself_Proxy_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Proxy_Domain.list" }
   Custom_Proxy_IP: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs" }
   Custom_Crypto_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_Crypto_Domain.list" }
   google-cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs" }
