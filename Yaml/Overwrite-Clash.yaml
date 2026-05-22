@@ -41,7 +41,7 @@ proxy-groups: #!replace
   - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
   - { name: AI出口前置,       type: select, proxies: [ SG, HK, US, JP, TW, 实验节点, 自动选择 ] }
   - { name: 测速工具,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
-  - { name: 漏网之鱼,        type: select, proxies: [ SG, TW, HK, US, JP, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ] }
+  - { name: 漏网之鱼,        type: select, proxies: [ SG, TW, HK, US, JP, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地|微林)).)*$' }
   #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
   - { name: HK,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(港|🇭🇰|HK|Hong|HKG))(?!.*(?i)(落地|微林)).*$' }
   - { name: US,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(?i)(落地|微林)).*$' }
