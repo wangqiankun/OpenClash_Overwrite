@@ -36,7 +36,7 @@ proxy-groups: #!replace
   - { name: ChatGPT,         type: select, proxies: [ AI服务SG,AI服务US, AI服务JP,自建节点 ] }
   - { name: AI服务,         type: select, proxies: [ AI服务SG,AI服务US, AI服务JP,自建节点 ] }
   - { name: AI服务SG,       type: fallback, proxies: [ AI服务SG-自建, SG ], url: "https://cp.cloudflare.com/generate_204", interval: 120 }
-  - { name: AI服务SG-自建,  hidden: true, type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^自建新加坡.*$' }
+  - { name: AI服务SG-自建,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^自建新加坡.*$' }
   - { name: AI服务US,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(中转)).*$' }
   - { name: AI服务JP,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|微林)).*$' }
   - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
