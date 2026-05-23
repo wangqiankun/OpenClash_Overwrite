@@ -1,3 +1,6 @@
+name: OpenClash Smart 覆写
+desc: OpenClash Smart 主路由覆写配置，包含策略组、规则集与自定义分流。
+
 #dns:
 #  # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
 #  proxy-server-nameserver:
@@ -39,7 +42,7 @@ proxy-groups: #!replace
   - { name: 苹果服务,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: 实验节点,    type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(实验性|Test))(?!.*(?i)(落地|微林)).*$' }
   - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
-  - { name: AI出口前置,       type: select, proxies: [ SG, HK, US, JP, TW, 实验节点, 自动选择 ] }
+  # - { name: AI出口前置,       type: select, proxies: [ SG, HK, US, JP, TW, 实验节点, 自动选择 ] }
   - { name: 测速工具,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: 漏网之鱼,        type: select, proxies: [ SG, TW, HK, US, JP, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地|微林)).)*$' }
   #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
