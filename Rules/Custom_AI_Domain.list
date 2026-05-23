@@ -1,1 +1,21 @@
 DOMAIN-SUFFIX,jetbrains.ai
+
+# OpenAI 补充依赖域名
+DOMAIN-SUFFIX,ct.sendgrid.net
+DOMAIN-SUFFIX,featuregates.org
+DOMAIN-SUFFIX,intercom.io
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN-SUFFIX,statsig.com
+DOMAIN,cdn.openaimerge.com
+DOMAIN,cdn.workos.com
+DOMAIN,challenges.cloudflare.com
+DOMAIN-SUFFIX,statsigapi.net
+DOMAIN,featureassets.org
+DOMAIN,forwarder.workos.com
+DOMAIN,humb.apple.com
+DOMAIN,images.workoscdn.com
+DOMAIN,js.stripe.com
+DOMAIN,o207216.ingest.sentry.io
+DOMAIN,prodregistryv2.org
+DOMAIN,setup.workos.com
+DOMAIN,workos.imgix.net
