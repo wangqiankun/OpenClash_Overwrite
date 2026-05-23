@@ -31,12 +31,14 @@ proxy-groups: #!replace
   - { name: 手动选择,        type: select, proxies: [ HK, US, JP, SG, TW, 自建节点, 实验节点, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地)).)*$' }
   - { name: 自动选择,        type: url-test, include-all: true, tolerance: 20, interval: 120, filter: "^((?!(直连|落地|自建)).)*$" }
   - { name: Telegram,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ] }
-  #  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连]}
   #  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连]}
-  - { name: AI服务,         type: select, proxies: [ AI服务SG, 自建节点, SG, HK, US, JP, TW, 手动选择, 自动选择 ] }
-  - { name: AI服务SG,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(新加坡|SG|Sing|SIN))(?!.*(?i)(落地|微林)).*$' }
+  - { name: Claude,         type: select, proxies: [ AI服务SG,AI服务US, AI服务JP,自建节点 ] }
+  - { name: ChatGPT,         type: select, proxies: [ AI服务SG,AI服务US, AI服务JP,自建节点 ] }
+  - { name: AI服务,         type: select, proxies: [ AI服务SG,AI服务US, AI服务JP,自建节点 ] }
+  - { name: AI服务SG,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(坡|🇸🇬|SG|Sing|SIN|XSP))(?!.*(?i)(落地|微林)).*$' }
+  - { name: AI服务US,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(落地)).*$' }
+  - { name: AI服务JP,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK))(?!.*(?i)(落地|微林)).*$' }
   - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
-  - { name: Claude,         type: select, proxies: [ AI服务, 自建节点, SG, US ] }
   - { name: JetBrains,      type: select, proxies: [ SG, HK, US, JP, TW, 自建节点, 实验节点, 手动选择, 自动选择, 全球直连 ] }
   - { name: YouTube,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: PayPal,         type: select, proxies: [ US, HK, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
@@ -81,7 +83,7 @@ rules: #!replace
   - RULE-SET,category-game-platforms-download,全球直连
   - RULE-SET,category-public-tracker,全球直连
   - RULE-SET,category-communication,Telegram
-  # - RULE-SET,openai,ChatGPT
+    - RULE-SET,openai,ChatGPT
   # - RULE-SET,google-gemini,Gemini
   - RULE-SET,JetBrains,JetBrains
   # - RULE-SET,github,GitHub
