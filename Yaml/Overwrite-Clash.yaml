@@ -33,7 +33,9 @@ proxy-groups: #!replace
   - { name: Telegram,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ] }
   #  - {name: ChatGPT,        type: select, proxies: [US, HK, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连]}
   #  - {name: Gemini,         type: select, proxies: [HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连]}
-  - { name: AI服务,         type: select, proxies: [ 自建节点, SG, HK, US, JP, TW, 手动选择, 自动选择 ] }
+  - { name: AI服务,         type: select, proxies: [ AI服务SG, 自建节点, SG, HK, US, JP, TW, 手动选择, 自动选择 ] }
+  - { name: AI服务SG,       type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^(?=.*(?i)自建)(?=.*(?i)(新加坡|SG|Sing|SIN))(?!.*(?i)(落地|微林)).*$' }
+  - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
   - { name: Claude,         type: select, proxies: [ AI服务, 自建节点, SG, US ] }
   - { name: JetBrains,      type: select, proxies: [ SG, HK, US, JP, TW, 自建节点, 实验节点, 手动选择, 自动选择, 全球直连 ] }
   - { name: YouTube,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
@@ -41,7 +43,6 @@ proxy-groups: #!replace
   - { name: 谷歌服务,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: 苹果服务,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: 实验节点,    type: url-test, include-all: true, tolerance: 20, interval: 120, filter: '^(?=.*(?i)(实验性|Test))(?!.*(?i)(落地|微林)).*$' }
-  - { name: 自建节点,         type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
   # - { name: AI出口前置,       type: select, proxies: [ SG, HK, US, JP, TW, 实验节点, 自动选择 ] }
   - { name: 测速工具,        type: select, proxies: [ HK, US, SG, JP, TW, 实验节点, 自建节点,手动选择, 自动选择, 全球直连 ] }
   - { name: 漏网之鱼,        type: select, proxies: [ SG, TW, HK, US, JP, 实验节点, 自建节点, 手动选择, 自动选择, 全球直连 ], use: [ Sub-store ], filter: '^((?!(落地|微林)).)*$' }
