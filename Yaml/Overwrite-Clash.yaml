@@ -1,35 +1,11 @@
 name: OpenClash Smart 覆写
 desc: OpenClash Smart 主路由覆写配置，包含策略组、规则集与自定义分流。
 
-dns:
-  enable: true
-  listen: 0.0.0.0:1053
-  ipv6: false
-  respect-rules: true
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-filter-mode: blacklist
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-  nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  direct-nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-  fallback:
-    - tls://1.1.1.1
-    - tls://8.8.8.8
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 240.0.0.0/4
-  # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
-  proxy-server-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+#dns:
+#  # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
+#  proxy-server-nameserver:
+#    - 223.5.5.5
+#    - 119.29.29.29
 
 proxy-providers:
   Sub-store:
