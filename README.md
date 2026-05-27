@@ -55,7 +55,7 @@
 * **订阅链接**：
 
 ```bash
-https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Overwrite/Overwrite-smart.conf
+https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Overwrite/Overwrite-smart.conf
 ```
 
 ### 配置环境变量
