@@ -178,14 +178,14 @@ proxy-groups: #!replace
 
   # ==================== 功能策略组 ====================
   - { name: 网络测试,     <<: *SelectPY, include-all: true, filter: *FilterAL, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Speedtest.png }
-  - { name: 抖快书定位,   type: select, proxies: [ 直接连接, 香港策略, 台湾策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 欧盟策略 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Null_Nation.png }
+#  - { name: 抖快书定位,   type: select, proxies: [ 直接连接, 香港策略, 台湾策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 欧盟策略 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Null_Nation.png }
 
   # ==================== 媒体服务 ====================
-  - { name: Emby服,      <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Emby.png }
+#  - { name: Emby服,      <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Emby.png }
   - { name: 油管视频,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/YouTube.png }
-  - { name: 奈飞视频,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Netflix.png }
-  - { name: 国际媒体,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/DomesticMedia.png }
-  - { name: 新闻媒体,     <<: *SelectUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Apple_News.png }
+#  - { name: 奈飞视频,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Netflix.png }
+#  - { name: 国际媒体,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/DomesticMedia.png }
+#  - { name: 新闻媒体,     <<: *SelectUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Apple_News.png }
 
   # ==================== 社交平台 ====================
   - { name: 电报消息,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Telegram_X.png }
@@ -261,7 +261,7 @@ rules:
   - AND,((DST-PORT,443),(NETWORK,UDP),(NOT,((GEOIP,CN)))),REJECT  # 阻止海外 QUIC
 
   # 域名规则
-  - RULE-SET,LocationDKS,抖快书定位
+#  - RULE-SET,LocationDKS,抖快书定位
   - RULE-SET,Private,直接连接
   - RULE-SET,Direct,直接连接
   - RULE-SET,Myself_Direct_Domain,直接连接
@@ -278,14 +278,14 @@ rules:
   - RULE-SET,Twitter,推特社交
   - RULE-SET,Telegram,电报消息
   - RULE-SET,SocialMedia,社交平台
-  - RULE-SET,NewsMedia,新闻媒体
+#  - RULE-SET,NewsMedia,新闻媒体
   - RULE-SET,Games,游戏平台
   - RULE-SET,Myself_Crypto_Domain,货币平台
   - RULE-SET,Crypto,货币平台
-  - RULE-SET,Emby,Emby服
-  - RULE-SET,Netflix,奈飞视频
+#  - RULE-SET,Emby,Emby服
+#  - RULE-SET,Netflix,奈飞视频
   - RULE-SET,YouTube,油管视频
-  - RULE-SET,Streaming,国际媒体
+#  - RULE-SET,Streaming,国际媒体
   - RULE-SET,Apple,苹果服务
   - RULE-SET,Google,谷歌服务
   - RULE-SET,Microsoft,微软服务
@@ -301,9 +301,9 @@ rules:
   - RULE-SET,AIIP,人工智能,no-resolve
   - RULE-SET,TelegramIP,电报消息,no-resolve
   - RULE-SET,SocialMediaIP,社交平台,no-resolve
-  - RULE-SET,EmbyIP,Emby服,no-resolve
-  - RULE-SET,NetflixIP,奈飞视频,no-resolve
-  - RULE-SET,StreamingIP,国际媒体,no-resolve
+#  - RULE-SET,EmbyIP,Emby服,no-resolve
+#  - RULE-SET,NetflixIP,奈飞视频,no-resolve
+#  - RULE-SET,StreamingIP,国际媒体,no-resolve
   - RULE-SET,GoogleIP,谷歌服务,no-resolve
   - RULE-SET,ProxyIP,国外流量,no-resolve
   - RULE-SET,ChinaIP,国内流量,no-resolve
