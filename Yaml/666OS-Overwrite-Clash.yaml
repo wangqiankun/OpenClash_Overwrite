@@ -124,6 +124,8 @@ BaseCH: &BaseCH { type: load-balance, interval: 200, lazy: true, url: 'https://w
 #  轮询。
 #  新连接按顺序轮流分配到不同节点。
 BaseCR: &BaseCR { type: load-balance, interval: 200, lazy: true, url: 'https://www.google.com/generate_204', strategy: round-robin, hidden: true }
+# BaseUT = Base URL-Test，基础自动测速模板。
+# 翻译：Base URL-Test = 基础 URL 测速；用于自动选择延迟最低的节点。
 BaseUT: &BaseUT { type: url-test, interval: 200, lazy: true, url: 'https://www.google.com/generate_204', hidden: true }
 
 # 节点筛选正则表达式 - 基于地理位置和关键词过滤
@@ -134,12 +136,22 @@ FilterKR: &FilterKR '^(?=.*(?i)(韩|🇰🇷|韓|首尔|南朝鲜|KR|KOR|Korea|S
 FilterUS: &FilterUS '^(?=.*(?i)(美|🇺🇸|US|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD))(?!.*(排除1|排除2|落地|微林|5x)).*$'
 FilterTW: &FilterTW '^(?=.*(?i)(台|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH))(?!.*(排除1|排除2|落地|微林|5x)).*$'
 FilterEU: &FilterEU '^(?=.*(?i)(奥|比|保|克罗地亚|塞|捷|丹|爱沙|芬|法|德|希|匈|爱尔|意|拉|立|卢|马其它|荷|波|葡|罗|斯洛伐|斯洛文|西|瑞|英|🇧🇪|🇨🇿|🇩🇰|🇫🇮|🇫🇷|🇩🇪|🇮🇪|🇮🇹|🇱🇹|🇱🇺|🇳🇱|🇵🇱|🇸🇪|🇬🇧|CDG|FRA|AMS|MAD|BCN|FCO|MUC|BRU))(?!.*(排除1|排除2|落地|微林|5x)).*$'
+# FilterOT = Filter Other，其他地区节点过滤器。
+# 翻译：Filter Other = 过滤其他；排除常见国家/地区关键词后，保留冷门或未归类节点。
 FilterOT: &FilterOT '^(?!.*(DIRECT|直接连接|美|港|坡|台|新|日|韩|奥|比|保|克罗地亚|塞|捷|丹|爱沙|芬|法|德|希|匈|爱尔|意|拉|立|卢|马其它|荷|波|葡|罗|斯洛伐|斯洛文|西|瑞|英|🇭🇰|🇼🇸|🇹🇼|🇸🇬|🇯🇵|🇰🇷|🇺🇸|🇬🇧|🇦🇹|🇧🇪|🇨🇿|🇩🇰|🇫🇮|🇫🇷|🇩🇪|🇮🇪|🇮🇹|🇱🇹|🇱🇺|🇳🇱|🇵🇱|🇸🇪|HK|TW|SG|JP|KR|US|GB|CDG|FRA|AMS|MAD|BCN|FCO|MUC|BRU|HKG|TPE|TSA|KHH|SIN|XSP|NRT|HND|KIX|CTS|FUK|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|LHR|LGW))'
+# FilterAL = Filter All，全部可用节点过滤器。
+# 翻译：Filter All = 过滤全部；排除订阅信息、官网、流量、到期等非节点条目。
 FilterAL: &FilterAL '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))'
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
+# SelectFB = Select Fallback，故障转移优先的手动选择模板。
+# 翻译：Select Fallback = 选择故障转移；默认把“故障转移”放在第一位。
 SelectFB: &SelectFB { type: select, proxies: [ 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
+# SelectPY = Select Proxy，代理优先的手动选择模板。
+# 翻译：Select Proxy = 选择代理；默认把“默认代理”放在第一位。
 SelectPY: &SelectPY { type: select, proxies: [ 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
+# SelectDC = Select Direct Connection，直连优先的手动选择模板。
+# 翻译：Select Direct Connection = 选择直接连接；默认把“直接连接”放在第一位。
 SelectDC: &SelectDC { type: select, proxies: [ 直接连接, 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动 ] }
 SelectHK: &SelectHK { type: select, proxies: [ 香港策略, 默认代理, 故障转移, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
 SelectSG: &SelectSG { type: select, proxies: [ 狮城策略, 默认代理, 故障转移, 香港策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
