@@ -102,6 +102,11 @@ dns:
     - 119.29.29.29
     - 180.184.1.1
     - 223.5.5.5
+  # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
+  proxy-server-nameserver:
+    - 119.29.29.29
+    - 180.184.1.1
+    - 223.5.5.5
   nameserver:
     - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
