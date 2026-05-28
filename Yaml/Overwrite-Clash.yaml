@@ -65,8 +65,8 @@ rules: #!replace
   - RULE-SET,private,全球直连
   - RULE-SET,Myself_Direct_Domain,Myself_Direct_Domain
   - RULE-SET,Myself_Proxy_Domain,手动选择
-  - RULE-SET,Custom_Crypto_Domain,手动选择
-  - RULE-SET,Custom_AI_Domain,AI服务
+  - RULE-SET,Myself_Crypto_Domain,手动选择
+  - RULE-SET,Myself_AI_Domain,AI服务
   - RULE-SET,Claude,Claude
   - RULE-SET,category-ai,AI服务
   - RULE-SET,private_IP,全球直连,no-resolve
@@ -113,7 +113,7 @@ rule-providers:
   Custom_Proxy_Domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/main/rule/Custom_Proxy_Domain.mrs" }
   Myself_Proxy_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Proxy_Domain.list" }
   Custom_Proxy_IP: { type: http, interval: 86400, behavior: ipcidr, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Custom_Proxy_IP.mrs" }
-  Custom_Crypto_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_Crypto_Domain.list" }
+  Myself_Crypto_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_Crypto_Domain.list" }
   google-cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-cn.mrs" }
   category-games@cn: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-games@cn.mrs" }
   Steam_CDN_Domain: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/Aethersailor/Custom_OpenClash_Rules/refs/heads/main/rule/Steam_CDN_Domain.mrs" }
@@ -123,7 +123,7 @@ rule-providers:
   category-communication: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-communication.mrs" }
   openai: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/openai.mrs" }
   # google-gemini:                            {type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs"}
-  Custom_AI_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Custom_AI_Domain.list" }
+  Myself_AI_Domain: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/wangqiankun/OpenClash_Overwrite/refs/heads/main/Rules/Myself_AI_Domain.list" }
   Claude: { type: http, interval: 86400, behavior: domain, format: yaml, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/anthropic.yaml" }
   JetBrains: { type: http, interval: 86400, behavior: classical, format: text, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Loon/Jetbrains/Jetbrains.list" }
   category-ai: { type: http, interval: 86400, behavior: domain, format: mrs, url: "https://gh-proxy.19930405.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs" }
