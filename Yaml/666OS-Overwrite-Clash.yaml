@@ -235,7 +235,7 @@ proxy-groups: #!replace
   # ==================== 自建策略组 ====================
   - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 120, filter: '^自建新加坡.*$' }
   - { name: 自建节点, type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
-  - { name: 流量节点, type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(实验性|Test))(?!.*(?i)(落地|微林)).*$' }
+  - { name: 流量节点, type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(实验性|实验|测试|Test|Traffic|流量))(?!.*(?i)(落地|微林)).*$'}
 
   # ==================== 其他策略组 ====================
   - { name: 冷门自选,     type: select, include-all: true, filter: *FilterOT, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Europe_Map.png }
