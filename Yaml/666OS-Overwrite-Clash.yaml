@@ -1,5 +1,5 @@
-name: OpenClash Smart 覆写
-desc: OpenClash Smart 主路由覆写配置，包含策略组、规则集与自定义分流。
+name: 基于666OS覆写
+desc: 包含策略组、规则集与自定义分流，主要用在主路由
 
 proxy-providers:
   Sub-store:
