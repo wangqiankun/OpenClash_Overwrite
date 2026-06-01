@@ -202,14 +202,14 @@ BaseUT: &BaseUT { type: url-test, interval: 300, tolerance: 80, lazy: true, url:
 SelectFB: &SelectFB { type: select, proxies: [ 香港策略, 狮城策略, 日本策略, 美国策略, 自建SG, 故障转移, 冷门自选, 全球手动, 直接连接 ] }
 # SelectPY = Select Proxy，代理优先的手动选择模板。
 # 翻译：Select Proxy = 选择代理；默认把“默认代理”放在第一位。
-SelectPY: &SelectPY { type: select, proxies: [ 默认代理, 故障转移, 流量节点, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
+SelectPY: &SelectPY { type: select, proxies: [ 默认代理, 故障转移, 流量节点, 香港策略, 狮城策略, 日本策略, 美国策略, 冷门自选, 全球手动, 直接连接 ] }
 # SelectDC = Select Direct Connection，直连优先的手动选择模板。
 # 翻译：Select Direct Connection = 选择直接连接；默认把“直接连接”放在第一位。
-SelectDC: &SelectDC { type: select, proxies: [ 直接连接, 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动 ] }
-SelectHK: &SelectHK { type: select, proxies: [ 香港策略, 默认代理, 故障转移, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
-SelectSG: &SelectSG { type: select, proxies: [ 狮城策略, 默认代理, 故障转移, 香港策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
-SelectUS: &SelectUS { type: select, proxies: [ 美国策略, 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
-SelectAI: &SelectAI { type: select, proxies: [ Claude, ChatGPT, 自建SG, 狮城策略, 默认代理, 故障转移, 香港策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
+SelectDC: &SelectDC { type: select, proxies: [ 直接连接, 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 美国策略, 冷门自选, 全球手动 ] }
+SelectHK: &SelectHK { type: select, proxies: [ 香港策略, 默认代理, 故障转移, 狮城策略, 日本策略, 美国策略, 冷门自选, 全球手动, 直接连接 ] }
+SelectSG: &SelectSG { type: select, proxies: [ 狮城策略, 默认代理, 故障转移, 香港策略, 日本策略, 美国策略, 冷门自选, 全球手动, 直接连接 ] }
+SelectUS: &SelectUS { type: select, proxies: [ 美国策略, 默认代理, 故障转移, 香港策略, 狮城策略, 日本策略, 冷门自选, 全球手动, 直接连接 ] }
+SelectAI: &SelectAI { type: select, proxies: [ Claude, ChatGPT, 自建SG, 狮城策略, 默认代理, 故障转移, 香港策略, 日本策略, 美国策略, 冷门自选, 全球手动, 直接连接 ] }
 
 
 
@@ -227,7 +227,7 @@ proxy-groups: #!replace
 
   # ==================== 功能策略组 ====================
   - { name: 网络测试,     <<: *SelectPY, include-all: true, filter: *FilterAL, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Speedtest.png }
-  #  - { name: 抖快书定位,   type: select, proxies: [ 直接连接, 香港策略, 台湾策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 欧盟策略 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Null_Nation.png }
+  #  - { name: 抖快书定位,   type: select, proxies: [ 直接连接, 香港策略, 狮城策略, 日本策略, 美国策略 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Null_Nation.png }
 
   # ==================== 媒体服务 ====================
   #  - { name: Emby服,      <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Emby.png }
@@ -245,7 +245,7 @@ proxy-groups: #!replace
   - { name: 人工智能,     <<: *SelectAI, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/AI.png }
   - { name: ChatGPT,    type: select, proxies: [ 自建SG, 狮城策略, 美国策略, 日本策略, 默认代理, 故障转移, 全球手动, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/ChatGPT.png }
   - { name: Claude,     type: select, proxies: [ 自建SG, 狮城策略, 美国策略, 日本策略, 默认代理, 故障转移, 全球手动, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/AI.png }
-  - { name: JetBrains,  type: select, proxies: [ 自建SG, 狮城策略, 香港策略, 美国策略, 日本策略, 台湾策略, 自建节点, 全球手动, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/JetBrains.png }
+  - { name: JetBrains,  type: select, proxies: [ 自建SG, 狮城策略, 香港策略, 美国策略, 日本策略, 自建节点, 全球手动, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/JetBrains.png }
   - { name: 货币平台,     <<: *SelectSG, icon: https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Bitcloud.png }
   - { name: 游戏平台,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Game.png }
   - { name: 微软服务,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Microsoft.png }
@@ -254,12 +254,9 @@ proxy-groups: #!replace
 
   # ==================== 地区策略组 ====================
   - { name: 香港策略,     type: select, proxies: [ 香港自动 ], include-all: true, filter: *FilterHK, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png }
-  - { name: 台湾策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterTW, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png }
   - { name: 狮城策略,     type: select, proxies: [ 狮城自动 ], include-all: true, filter: *FilterSG, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png }
   - { name: 日本策略,     type: select, proxies: [ 日本自动 ], include-all: true, filter: *FilterJP, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png }
-  - { name: 韩国策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterKR, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png }
   - { name: 美国策略,     type: select, proxies: [ 美国自动 ], include-all: true, filter: *FilterUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png }
-  - { name: 欧盟策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterEU, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/European_Union.png }
 
   # ==================== 自建策略组 ====================
   - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 300, filter: '^(?=.*自建新加坡)(?!.*(中转|测试|备用|Traffic|Test)).*$' }
