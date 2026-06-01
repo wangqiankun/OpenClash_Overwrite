@@ -197,9 +197,9 @@ BaseUT: &BaseUT { type: url-test, interval: 300, tolerance: 80, lazy: true, url:
 
 
 # 策略组代理列表模板 - 预定义的代理节点优先级排序
-# SelectFB = Select Fallback，故障转移优先的手动选择模板。
-# 翻译：Select Fallback = 选择故障转移；默认把“故障转移”放在第一位。
-SelectFB: &SelectFB { type: select, proxies: [ 故障转移, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
+# SelectFB = Select Fallback，保留故障转移作为兜底的手动选择模板。
+# 翻译：Select Fallback = 选择故障转移；默认优先使用高频地区策略，故障转移只作为兜底。
+SelectFB: &SelectFB { type: select, proxies: [ 香港策略, 狮城策略, 日本策略, 美国策略, 自建SG, 故障转移, 冷门自选, 全球手动, 直接连接 ] }
 # SelectPY = Select Proxy，代理优先的手动选择模板。
 # 翻译：Select Proxy = 选择代理；默认把“默认代理”放在第一位。
 SelectPY: &SelectPY { type: select, proxies: [ 默认代理, 故障转移, 流量节点, 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 冷门自选, 全球手动, 直接连接 ] }
@@ -219,7 +219,7 @@ SelectAI: &SelectAI { type: select, proxies: [ Claude, ChatGPT, 自建SG, 狮城
 proxy-groups: #!replace
   # ==================== 主要策略组 ====================
   - { name: 默认代理,     <<: *SelectFB, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Static.png }
-  - { name: 故障转移,     <<: *BaseFB, proxies: [ 香港策略, 狮城策略, 日本策略, 韩国策略, 美国策略, 台湾策略, 欧盟策略, 全球手动, 冷门自选, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/ULB.png }
+  - { name: 故障转移,     <<: *BaseFB, proxies: [ 香港策略, 狮城策略, 日本策略, 美国策略, 直接连接 ], icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/ULB.png }
   - { name: 国外流量,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Global.png }
   - { name: 国内流量,     <<: *SelectDC, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/China.png }
   - { name: 兜底流量,     <<: *SelectPY, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Final.png }
@@ -254,15 +254,15 @@ proxy-groups: #!replace
 
   # ==================== 地区策略组 ====================
   - { name: 香港策略,     type: select, proxies: [ 香港自动 ], include-all: true, filter: *FilterHK, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Hong_Kong.png }
-  - { name: 台湾策略,     type: select, proxies: [ 台湾自动 ], include-all: true, filter: *FilterTW, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png }
+  - { name: 台湾策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterTW, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Taiwan.png }
   - { name: 狮城策略,     type: select, proxies: [ 狮城自动 ], include-all: true, filter: *FilterSG, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Singapore.png }
   - { name: 日本策略,     type: select, proxies: [ 日本自动 ], include-all: true, filter: *FilterJP, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Japan.png }
-  - { name: 韩国策略,     type: select, proxies: [ 韩国自动 ], include-all: true, filter: *FilterKR, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png }
+  - { name: 韩国策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterKR, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Korea.png }
   - { name: 美国策略,     type: select, proxies: [ 美国自动 ], include-all: true, filter: *FilterUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png }
-  - { name: 欧盟策略,     type: select, proxies: [ 欧盟自动 ], include-all: true, filter: *FilterEU, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/European_Union.png }
+  - { name: 欧盟策略,     type: select, proxies: [ 默认代理, 故障转移, 全球手动, 直接连接 ], include-all: true, filter: *FilterEU, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/European_Union.png }
 
   # ==================== 自建策略组 ====================
-  - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 300, filter: '^自建新加坡.*$' }
+  - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 300, filter: '^(?=.*自建新加坡)(?!.*(中转|测试|备用|Traffic|Test)).*$' }
   - { name: 自建节点, type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
   - { name: 流量节点, type: url-test, include-all: true, tolerance: 80, interval: 300, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(实验性|实验|测试|Test|Traffic|流量))(?!.*(?i)(落地|微林)).*$'}
 
@@ -272,12 +272,9 @@ proxy-groups: #!replace
 
   # ==================== 自动测速组 ====================
   - { name: 香港自动,     <<: *BaseUT, include-all: true, filter: *FilterHK, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
-  - { name: 台湾自动,     <<: *BaseUT, include-all: true, filter: *FilterTW, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
   - { name: 狮城自动,     <<: *BaseUT, include-all: true, filter: *FilterSG, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
   - { name: 日本自动,     <<: *BaseUT, include-all: true, filter: *FilterJP, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
-  - { name: 韩国自动,     <<: *BaseUT, include-all: true, filter: *FilterKR, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
   - { name: 美国自动,     <<: *BaseUT, include-all: true, filter: *FilterUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
-  - { name: 欧盟自动,     <<: *BaseUT, include-all: true, filter: *FilterEU, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/Auto.png }
 
   #   #此配置备注： HK 这个组会自动收集所有香港节点，并每隔一段时间测速，自动选择延迟合适的香港节点。
   #   - { name: HK,        type: url-test, include-all: true, tolerance: 20, interval: 120, url: "https://cp.cloudflare.com/generate_204", filter: *FilterHK }
