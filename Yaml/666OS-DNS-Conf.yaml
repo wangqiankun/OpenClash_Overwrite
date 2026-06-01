@@ -259,7 +259,7 @@ proxy-groups: #!replace
   - { name: 美国策略,     type: select, proxies: [ 美国自动 ], include-all: true, filter: *FilterUS, icon: https://github.com/Koolson/Qure/raw/master/IconSet/Color/United_States.png }
 
   # ==================== 自建策略组 ====================
-  - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 300, filter: '^(?=.*自建新加坡)(?!.*(中转|测试|备用|Traffic|Test)).*$' }
+  - { name: 自建SG,   type: fallback, include-all: true, url: "https://cp.cloudflare.com/generate_204", interval: 300, filter: '^(?=.*自建新加坡)(?!.*(测试|备用|Traffic|Test)).*$' }
   - { name: 自建节点, type: select, include-all: true, filter: '^(?=.*(?i)(自建|落地|微林)).*$' }
   - { name: 流量节点, type: url-test, include-all: true, tolerance: 80, interval: 300, url: "https://cp.cloudflare.com/generate_204", filter: '^(?=.*(?i)(实验性|实验|测试|Test|Traffic|流量))(?!.*(?i)(落地|微林)).*$'}
 
