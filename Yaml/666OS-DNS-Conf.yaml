@@ -65,11 +65,11 @@ experimental:
   quic-go-disable-gso: true
 
 # 管理面板配置
-external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip
-external-ui-name: zashboard
-external-ui: ui
-external-controller: 127.0.0.1:9090
-secret: yyds666
+#external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip
+#external-ui-name: zashboard
+#external-ui: ui
+#external-controller: 127.0.0.1:9090
+#secret: yyds666
 
 # 配置存储
 profile:
