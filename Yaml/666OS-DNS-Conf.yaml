@@ -125,7 +125,6 @@ dns:
   # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
   proxy-server-nameserver:
     - "119.29.29.29#直接连接"
-    - "180.184.1.1#直接连接"
     - "223.5.5.5#直接连接"
   nameserver:
     - "223.5.5.5#直接连接"
@@ -184,10 +183,10 @@ FilterAL: &FilterAL '^(?!.*(DIRECT|直接连接|群|邀请|返利|循环|官网|
 # =========================================
 
 # 策略组类型模板 - 定义不同的策略组基础配置
-BaseFB: &BaseFB { type: fallback, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204' }
+BaseFB: &BaseFB { type: fallback, interval: 300, lazy: true, url: 'https://cp.cloudflare.com/generate_204' }
 # BaseUT = Base URL-Test，基础自动测速模板。
 # 翻译：Base URL-Test = 基础 URL 测速；用于自动选择延迟最低的节点。
-BaseUT: &BaseUT { type: url-test, interval: 200, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true }
+BaseUT: &BaseUT { type: url-test, interval: 300, tolerance: 80, lazy: true, url: 'https://cp.cloudflare.com/generate_204', hidden: true }
 
 #  一致性哈希。（用不到）
 #  同一个目标地址/连接特征通常会被分配到同一个节点。
