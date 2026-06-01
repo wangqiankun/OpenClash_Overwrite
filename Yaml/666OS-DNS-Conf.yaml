@@ -119,20 +119,16 @@ dns:
   fake-ip-filter-mode: blacklist
   default-nameserver:
     - 119.29.29.29
-    - 180.184.1.1
     - 223.5.5.5
-    - 2400:3200::1
   # 用于解析代理服务器域名，避免 respect-rules 启用后 DNS 解析依赖代理产生循环。
   proxy-server-nameserver:
     - "119.29.29.29#直接连接"
     - "223.5.5.5#直接连接"
   nameserver:
-    - "223.5.5.5#直接连接"
     - "119.29.29.29#直接连接"
-    - "114.114.114.114#直接连接"
+    - "223.5.5.5#直接连接"
   direct-nameserver:
     - "119.29.29.29#直接连接"
-    - "180.184.1.1#直接连接"
     - "223.5.5.5#直接连接"
   direct-nameserver-follow-policy: true
   fallback:
